@@ -49,3 +49,7 @@ Temporary Items
 .classpath
 
 *.class
+
+*.class
+
+.classpath
