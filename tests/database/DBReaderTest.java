@@ -42,14 +42,24 @@ public class DBReaderTest {
   public void testSelectProperty() {
     DBReader reader = new DBReader();
     List<Property> testPropList = reader.selectProperty("580 Washington St", 02111);
+    
     // Test to see that the list has 5 properties in it, which is the number or properties that are
     // in the Properties table with the same address and zip
     assertEquals(5, testPropList.size());
-    // Check that the list is actually populated with Properties, and not nulls
+    
+    /*
+     *  Check for the following:
+     *  1.) that the list is actually populated with Properties, and not nulls, 
+     *  2.) that all the Properties have zpids.
+     *  3.) That the addresses match what we queried for 
+     *  4.) That the zip codes match what we queried for  
+     */
     for(Property p : testPropList){
       assertNotNull(p);
-    }
-    
+      assertNotNull(p.getZpid());
+      assertEquals(true, p.getStreetAddress().equals("580 Washington St"));
+      assertEquals(02111, p.getZipCode());
+    }    
   }
 
   /**
