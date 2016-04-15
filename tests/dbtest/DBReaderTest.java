@@ -1,7 +1,7 @@
 /**
  * 
  */
-package database;
+package dbtest;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,7 @@ import java.util.List;
 import org.junit.Test;
 
 import classes_for_db.Property;
+import database.DBReader;
 
 /**
  * @author brandonbogan
@@ -41,7 +42,7 @@ public class DBReaderTest {
   @Test
   public void testSelectProperty() {
     DBReader reader = new DBReader();
-    List<Property> testPropList = reader.selectProperty("580 Washington St", 02111);
+    List<Property> testPropList = reader.selectProperty("580 Washington St", 2111);
     
     // Test to see that the list has 5 properties in it, which is the number or properties that are
     // in the Properties table with the same address and zip

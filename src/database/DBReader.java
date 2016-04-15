@@ -86,9 +86,18 @@ public class DBReader {
 		try {
 			List<Property> lp = new ArrayList<Property>();
 			ResultSet rs = null;
-			String st =  "SELECT * FROM Properties WHERE address LIKE " + address + " AND zip = " + zip + ";";
+			String st =  "SELECT * FROM Properties WHERE streetAddress LIKE ? AND zipcode = ?;";
 
-			rs = connect.createStatement().executeQuery(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st);
+
+		      ps.setString(1, address);
+		      System.out.println(zip);
+		      ps.setInt(2, zip);
+		      
+		      ps.execute();
+		      rs = ps.executeQuery();
+
+			
 			if(rs.next() == false) {
 				System.out.println("No property found for address: " + address + " and zip code: " + zip);
 				return lp;
@@ -106,7 +115,7 @@ public class DBReader {
 					p.setRegionID(rs.getInt(8));
 					p.setCountyCode(rs.getInt(9));
 					p.setUseCode(rs.getString(10));
-					p.setYearBuilt(rs.getString(11));
+					p.setYearBuilt(rs.getDate(11).getYear());
 					p.setLotSizeSqFt(rs.getInt(12));
 					p.setFinishedSqFt(rs.getInt(13));
 					p.setBathroomCount(rs.getFloat(14));
