@@ -82,16 +82,16 @@ public class DBReader {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public List<Property> selectProperty(String address, int zip) {
 		try {
 			List<Property> lp = new ArrayList<Property>();
 			ResultSet rs = null;
 			String st =  "SELECT * FROM Properties WHERE streetAddress LIKE ? AND zipcode = ?;";
 
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setString(1, address);
-		      System.out.println(zip);
 		      ps.setInt(2, zip);
 		      
 		      ps.execute();
@@ -103,6 +103,7 @@ public class DBReader {
 				return lp;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {	
 					Property p = new Property();
 					p.setZpid(BigInteger.valueOf(rs.getInt(1)));
@@ -115,7 +116,7 @@ public class DBReader {
 					p.setRegionID(rs.getInt(8));
 					p.setCountyCode(rs.getInt(9));
 					p.setUseCode(rs.getString(10));
-					p.setYearBuilt(rs.getDate(11).getYear());
+					p.setYearBuilt(rs.getString(11).substring(0, 4));
 					p.setLotSizeSqFt(rs.getInt(12));
 					p.setFinishedSqFt(rs.getInt(13));
 					p.setBathroomCount(rs.getFloat(14));
@@ -156,13 +157,20 @@ public class DBReader {
 		try {
 			Zestimate z = null;
 			ResultSet rs = null;
-			String st =  "SELECT * FROM Zestimates Z WHERE Z.zpid = " + zpid + ";";
-			rs = connect.createStatement().executeQuery(st);
+			String st =  "SELECT * FROM Zestimates Z WHERE zpid = ?;";
+
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+		      ps.setInt(1, zpid.intValue());
+		      ps.execute();
+		      rs = ps.executeQuery();
+		      
 			if(rs.next() == false) {
 				System.out.println("No Zestimate found for zpid: " + zpid);
 				return z;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					z.setZestimate(rs.getInt(1));
 					z.setZpid(BigInteger.valueOf(rs.getInt(2)));
@@ -189,13 +197,21 @@ public class DBReader {
 		try {
 			Neighborhood n = null;
 			ResultSet rs = null;
-			String st =  "SELECT * FROM Neighborhoods N WHERE N.regionID = " + regionID + ";";
-			rs = connect.createStatement().executeQuery(st);
+			String st =  "SELECT * FROM Neighborhoods N WHERE N.regionID = ?;";
+
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+		      ps.setInt(1, regionID);
+		      ps.execute();
+		      rs = ps.executeQuery();
+		      
+			
 			if(rs.next() == false) {
 				System.out.println("No Neighborhood found for regionID: " + regionID);
 				return n;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					n.setRegionID(rs.getInt(1));
 					n.setName(rs.getString(2));
@@ -218,14 +234,21 @@ public class DBReader {
 		try {
 			List<TaxAssessment> lt = new ArrayList<TaxAssessment>();
 			ResultSet rs = null;
-			String st =  "SELECT * FROM TaxAssessments T WHERE T.zpid = " + zpid + 
-					"ORDER BY taxYear DESC"+ ";";
-			rs = connect.createStatement().executeQuery(st);
+			String st =  "SELECT * FROM TaxAssessments T WHERE T.zpid = ?" + 
+					" ORDER BY taxYear DESC;";
+
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+		      ps.setInt(1, zpid.intValue());
+		      ps.execute();
+		      rs = ps.executeQuery();
+		      
 			if(rs.next() == false) {
 				System.out.println("No Tax Assessments found for zpid: " + zpid);
 				return lt;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					TaxAssessment t = null;
 					t.setAssessmentID(BigInteger.valueOf(rs.getInt(1)));
@@ -249,13 +272,21 @@ public class DBReader {
 		try{
 			PropertyDetails pd = null;
 			ResultSet rs = null;
-			String st =  "SELECT * FROM PropertyDetails PD WHERE PD.zpid = " + zpid + ";";
-			rs = connect.createStatement().executeQuery(st);
+			String st =  "SELECT * FROM PropertyDetails PD WHERE PD.zpid = ?;";
+			
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+		      ps.setInt(1, zpid.intValue());
+		      ps.execute();
+		      rs = ps.executeQuery();
+		      
+		      
 			if(rs.next() == false) {
 				System.out.println("No PropertyDetails found for zpid: " + zpid);
 				return pd;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					pd.setZpid(BigInteger.valueOf(rs.getInt(1)));
 					pd.setStatus(rs.getString(2));
@@ -287,16 +318,24 @@ public class DBReader {
 		try {
 			List<ZillowComparable> lc = new ArrayList<ZillowComparable>();
 			ResultSet rs = null;
-			String st =  "SELECT * FROM Comparable C WHERE C.primaryZPID = " + zpid + 
-					"ORDER BY compScore ASC"+ ";";
-			rs = connect.createStatement().executeQuery(st);
-			if(rs.next() == false) {
+			String st =  "SELECT * FROM Comparables C WHERE C.primaryZPID = ?" + 
+					" ORDER BY compScore ASC;";
+			
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+		      ps.setInt(1, zpid.intValue());
+		      ps.execute();
+		      rs = ps.executeQuery();
+		      
+		      
+			if(!rs.next()) {
 				System.out.println("No Comparables found for zpid: " + zpid);
 				return lc;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
-					ZillowComparable c = null;
+					ZillowComparable c = new ZillowComparable();
 					c.setCompID(BigInteger.valueOf(rs.getInt(1)));
 					c.setPrimaryZPID(BigInteger.valueOf(rs.getInt(2)));
 					c.setCompZPID(BigInteger.valueOf(rs.getInt(3)));
