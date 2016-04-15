@@ -59,8 +59,10 @@ public class DBReaderTest {
       assertNotNull(p);
       assertNotNull(p.getZpid());
       assertEquals(true, p.getStreetAddress().equals("580 Washington St"));
-      assertEquals(02111, p.getZipCode());
-    }    
+      assertEquals(2111, p.getZipCode());
+    }
+    
+    //assertEquals(1162, testPropList.get(0).getFinishedSqFt());
   }
 
   /**
