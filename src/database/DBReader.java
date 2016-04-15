@@ -89,7 +89,7 @@ public class DBReader {
 			ResultSet rs = null;
 			String st =  "SELECT * FROM Properties WHERE streetAddress LIKE ? AND zipcode = ?;";
 
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setString(1, address);
 		      ps.setInt(2, zip);
@@ -103,6 +103,7 @@ public class DBReader {
 				return lp;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {	
 					Property p = new Property();
 					p.setZpid(BigInteger.valueOf(rs.getInt(1)));
@@ -158,7 +159,7 @@ public class DBReader {
 			ResultSet rs = null;
 			String st =  "SELECT * FROM Zestimates Z WHERE zpid = ?;";
 
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setInt(1, zpid.intValue());
 		      ps.execute();
@@ -169,6 +170,7 @@ public class DBReader {
 				return z;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					z.setZestimate(rs.getInt(1));
 					z.setZpid(BigInteger.valueOf(rs.getInt(2)));
@@ -197,7 +199,7 @@ public class DBReader {
 			ResultSet rs = null;
 			String st =  "SELECT * FROM Neighborhoods N WHERE N.regionID = ?;";
 
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setInt(1, regionID);
 		      ps.execute();
@@ -209,6 +211,7 @@ public class DBReader {
 				return n;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					n.setRegionID(rs.getInt(1));
 					n.setName(rs.getString(2));
@@ -234,7 +237,7 @@ public class DBReader {
 			String st =  "SELECT * FROM TaxAssessments T WHERE T.zpid = ?" + 
 					" ORDER BY taxYear DESC;";
 
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setInt(1, zpid.intValue());
 		      ps.execute();
@@ -245,6 +248,7 @@ public class DBReader {
 				return lt;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					TaxAssessment t = null;
 					t.setAssessmentID(BigInteger.valueOf(rs.getInt(1)));
@@ -270,7 +274,7 @@ public class DBReader {
 			ResultSet rs = null;
 			String st =  "SELECT * FROM PropertyDetails PD WHERE PD.zpid = ?;";
 			
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setInt(1, zpid.intValue());
 		      ps.execute();
@@ -282,6 +286,7 @@ public class DBReader {
 				return pd;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
 					pd.setZpid(BigInteger.valueOf(rs.getInt(1)));
 					pd.setStatus(rs.getString(2));
@@ -316,20 +321,21 @@ public class DBReader {
 			String st =  "SELECT * FROM Comparables C WHERE C.primaryZPID = ?" + 
 					" ORDER BY compScore ASC;";
 			
-			 PreparedStatement ps = this.connect.prepareStatement(st);
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 		      ps.setInt(1, zpid.intValue());
 		      ps.execute();
 		      rs = ps.executeQuery();
 		      
 		      
-			if(rs.next() == false) {
+			if(!rs.next()) {
 				System.out.println("No Comparables found for zpid: " + zpid);
 				return lc;
 			}
 			else {
+				rs.beforeFirst();
 				while(rs.next()) {
-					ZillowComparable c = null;
+					ZillowComparable c = new ZillowComparable();
 					c.setCompID(BigInteger.valueOf(rs.getInt(1)));
 					c.setPrimaryZPID(BigInteger.valueOf(rs.getInt(2)));
 					c.setCompZPID(BigInteger.valueOf(rs.getInt(3)));

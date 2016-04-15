@@ -46,7 +46,7 @@ public class DBReaderTest {
     
     // Test to see that the list has 5 properties in it, which is the number or properties that are
     // in the Properties table with the same address and zip
-    assertEquals(5, testPropList.size());
+    assertEquals(6, testPropList.size());
     
     /*
      *  Check for the following:
@@ -62,7 +62,9 @@ public class DBReaderTest {
       assertEquals(2111, p.getZipCode());
     }
     
-    //assertEquals(1162, testPropList.get(0).getFinishedSqFt());
+    assertEquals(1162, testPropList.get(0).getFinishedSqFt());
+    assertEquals(2013, testPropList.get(2).getYearBuilt());
+
   }
 
   /**
