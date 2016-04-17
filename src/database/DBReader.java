@@ -399,8 +399,41 @@ public class DBReader {
 					 d.setHispanicPctPop(rs.getDouble(22));
 					 d.setPop1824(rs.getInt(23));
 					 d.setPopOver(25, rs.getInt(24));
-					 
+					 d.setPctEdu("less than hs", rs.getDouble(25));
+					 d.setPctEdu("some hs", rs.getDouble(26));
+					 d.setPctEdu("hs grads", rs.getDouble(27));
+					 d.setPctEdu("some college", rs.getDouble(28));
+					 d.setPctEdu("associate's degree", rs.getDouble(29));
+					 d.setPctEdu("bachelor's degree", rs.getDouble(30));
+					 d.setPctEdu("graduate degree", rs.getDouble(31));
+					 d.setPctEduOrMore("hs", rs.getDouble(32));
+					 d.setPctEduOrMore("bachelor's", rs.getDouble(33));
+					 d.setMedianEarnings(rs.getInt(34));
+					 d.setMedianEarningsEdu("bachelor's", rs.getInt(35));
+					 d.setMedianEarningsEdu("graduate", rs.getInt(36));
+					 d.setNumHouseholds(rs.getInt(37));
+					 d.setFamHouseholds(rs.getInt(38));
+					 d.setPctFamilyHouseholds(rs.getDouble(39));
+					 d.setAvgFamSize(rs.getDouble(40));
+					 d.setNumFamU18Child(rs.getInt(41));
+					 d.setPctUnmarriedSex("gay", rs.getDouble(42));
+					 d.setPctUnmarriedSex("straight", rs.getDouble(43));
+					 d.setPctOneUnitStruct(rs.getDouble(44));
+					 d.setPctTwoPlusUnitStruct(rs.getDouble(45));
+				     d.setPctOcc("owner", rs.getDouble(46));
+				     d.setPctOcc("renter", rs.getDouble(47));
+				     d.setZipType(rs.getString(48));
+				     d.setCity(rs.getString(49));
+				     d.setState(rs.getString(50));
+				     d.setCounty(rs.getString(51));
+				     d.setTimeZone(rs.getString(52));
+				     d.setAreaCode1(rs.getInt(53));
+				     d.setAreaCode2(rs.getInt(54));
+					 d.setLatitude(rs.getFloat(55));
+					 d.setLongitude(rs.getFloat(56));
+					 d.setCountry(rs.getString(57));
 				 }
+				 return d;
 			 }
 
 		}
