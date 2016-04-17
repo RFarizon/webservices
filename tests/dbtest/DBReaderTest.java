@@ -1,17 +1,20 @@
-/**
- * 
- */
 package dbtest;
 
 import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.math.BigInteger;
 import org.junit.Test;
 
+import classes_for_db.DemoGeo;
+import classes_for_db.Neighborhood;
 import classes_for_db.Property;
+import classes_for_db.TaxAssessment;
+import classes_for_db.Zestimate;
+import classes_for_db.ZillowComparable;
 import database.DBReader;
 
 /**
@@ -63,7 +66,7 @@ public class DBReaderTest {
     }
     
     assertEquals(1162, testPropList.get(0).getFinishedSqFt());
-    assertEquals(2013, testPropList.get(2).getYearBuilt());
+    assertEquals(0, testPropList.get(2).getYearBuilt());
 
   }
 
@@ -72,7 +75,64 @@ public class DBReaderTest {
    */
   @Test
   public void testSelectZestimate() {
-    fail("Not yet implemented"); // TODO
+	  DBReader reader = new DBReader();
+	  List<Property> testPropList = reader.selectProperty("580 Washington St", 2111);
+	  ArrayList<Zestimate> testZests = new ArrayList<Zestimate>();
+	  for(Property p : testPropList) {
+		  testZests.add(reader.selectZestimate(p.getZpid()));
+	  }
+	  for(Zestimate z : testZests) {
+		  assertNotNull(z);
+	      assertNotNull(z.getZpid());
+	      assertNotNull(z.getZestimateID());
+	  }
+	 assertEquals(32465, testZests.get(4).getThirtyDayChange());
+	 // assertEquals(3450024, testZests.get(15).getZestimate());
+	  assertEquals(6, testZests.size());
+	//  assertEquals(1333353, testZests.get(25).getvaluationLow());
+	  
+  }
+  @Test
+  public void testSelectNeighborhood() {
+	  DBReader reader = new DBReader();
+	  List<Property> testPropList = reader.selectProperty("580 Washington St", 2111);
+	  ArrayList<Neighborhood> testHoods = new ArrayList<Neighborhood>();
+	  for(Property p : testPropList) {
+		  testHoods.add(reader.selectNeighborhood(p.getRegionID()));
+	  }
+	  for(Neighborhood n : testHoods) {
+		  assertNotNull(n);
+	      assertNotNull(n.getRegionID());
+	      assertNotNull(n.getZindex());
+	  }
+	 assertEquals(true, testHoods.get(4).getType().equals("neighborhood"));
+	 // assertEquals(3450024, testZests.get(15).getZestimate());
+	  assertEquals(6, testHoods.size());
+  }
+  
+  @Test
+  public void testSelectTaxAssessments() {
+	  DBReader reader = new DBReader();
+	  List<Property> testPropList = reader.selectProperty("580 Washington St", 2111);
+	  List<TaxAssessment> testTax = reader.selectTaxAssessments(testPropList.get(0).getZpid());
+	  assertEquals(true, !testTax.isEmpty());
+	  assertNotNull(testTax.get(0).getAssessmentID());
+	  assertEquals(2015, testTax.get(0).getTaxYear());
+  }
+  
+  @Test
+  public void testSelectComparables() {
+	  DBReader reader = new DBReader();
+	  List<Property> testPropList = reader.selectProperty("580 Washington St", 2111);
+	  List<ZillowComparable> testComps = testPropList.get(0).getZillowComps();
+	  assertEquals(18, testComps.size());
+  }
+  
+  @Test
+  public void testSelectDemo() {
+	  DBReader reader = new DBReader();
+	  DemoGeo dallas = reader.selectDemoGeo(75201);
+	  assertEquals(20, dallas.getRacePctPop("black"), 0.5);
   }
 
 }
