@@ -39,7 +39,7 @@ public class DBReader {
 
 	public DBReader() {
 		try {
-			this.getConnection();
+			connect = this.getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,7 +57,6 @@ public class DBReader {
 				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName;
 		System.out.println(connectionString);
 		conn = DriverManager.getConnection(connectionString, connectionProps);
-		connect = conn;
 
 		return conn;
 	}
@@ -117,14 +116,23 @@ public class DBReader {
 					p.setRegionID(rs.getInt(8));
 					p.setCountyCode(rs.getInt(9));
 					p.setUseCode(rs.getString(10));
-					p.setYearBuilt(rs.getString(11).substring(0, 4));
-					p.setLotSizeSqFt(rs.getInt(12));
-					p.setFinishedSqFt(rs.getInt(13));
-					p.setBathroomCount(rs.getFloat(14));
-					p.setBedroomCount(rs.getInt(15));
-					p.setLastSoldDate(rs.getDate(16));
-					p.setLastSoldPrice(rs.getInt(17));
-					
+					p.setLotSizeSqFt(rs.getInt(11));
+					p.setFinishedSqFt(rs.getInt(12));
+					p.setBathroomCount(rs.getFloat(13));
+					p.setBedroomCount(rs.getInt(14));
+					if(rs.getInt(15) == 0) {
+						p.setLastSoldDate("");
+					}
+					else {
+					p.setLastSoldDate(rs.getDate(15));
+					}
+					p.setLastSoldPrice(rs.getInt(16));
+					if(rs.getString(17) == null) {
+						p.setYearBuilt(0);
+					}
+					else {
+						p.setYearBuilt(rs.getString(11).substring(0, 4));
+					}
 					
 					Zestimate z = selectZestimate(p.getZpid());
 					p.setZestimate(z);
@@ -156,7 +164,7 @@ public class DBReader {
 
 	public Zestimate selectZestimate(BigInteger zpid) {
 		try {
-			Zestimate z = null;
+			Zestimate z = new Zestimate();
 			ResultSet rs = null;
 			String st =  "SELECT * FROM Zestimates Z WHERE zpid = ?;";
 
@@ -173,14 +181,15 @@ public class DBReader {
 			else {
 				rs.beforeFirst();
 				while(rs.next()) {
-					z.setZestimate(rs.getInt(1));
+					z.setZestimateID(BigInteger.valueOf(rs.getInt(1)));
 					z.setZpid(BigInteger.valueOf(rs.getInt(2)));
-					z.setLastUpdated(rs.getDate(3));
-					z.setThirtyDayChange(rs.getInt(4));
-					z.setValuationHigh(rs.getInt(5));
-					z.setvaluationLow(rs.getInt(6));
-					z.setPercentileValue(rs.getFloat(7));
-					z.setDateRetrieved(rs.getDate(8));
+					z.setZestimate(rs.getInt(3));
+					z.setLastUpdated(rs.getDate(4));
+					z.setThirtyDayChange(rs.getInt(5));
+					z.setValuationHigh(rs.getInt(6));
+					z.setvaluationLow(rs.getInt(7));
+					z.setPercentileValue(rs.getFloat(8));
+					z.setDateRetrieved(rs.getDate(9));
 				}
 
 			}
@@ -196,7 +205,7 @@ public class DBReader {
 	
 	public Neighborhood selectNeighborhood(int regionID) {
 		try {
-			Neighborhood n = null;
+			Neighborhood n = new Neighborhood();
 			ResultSet rs = null;
 			String st =  "SELECT * FROM Neighborhoods N WHERE N.regionID = ?;";
 
@@ -251,7 +260,7 @@ public class DBReader {
 			else {
 				rs.beforeFirst();
 				while(rs.next()) {
-					TaxAssessment t = null;
+					TaxAssessment t = new TaxAssessment();
 					t.setAssessmentID(BigInteger.valueOf(rs.getInt(1)));
 					t.setZpid(BigInteger.valueOf(rs.getInt(2)));
 					t.setTaxYear(rs.getInt(3));
@@ -271,7 +280,7 @@ public class DBReader {
 	
 	public PropertyDetails selectPropertyDetails(BigInteger zpid) {
 		try{
-			PropertyDetails pd = null;
+			PropertyDetails pd = new PropertyDetails();
 			ResultSet rs = null;
 			String st =  "SELECT * FROM PropertyDetails PD WHERE PD.zpid = ?;";
 			
@@ -293,7 +302,7 @@ public class DBReader {
 					pd.setStatus(rs.getString(2));
 					pd.setPosting_type(rs.getString(3));
 					pd.setLastUpdated(rs.getDate(4));
-					pd.setyearUpdated(rs.getString(5));
+					pd.setyearUpdated(rs.getString(5).substring(0,4));
 					pd.setNumFloors(rs.getInt(6));
 					pd.setBasement(rs.getString(7));
 					pd.setRoofType(rs.getString(8));
@@ -357,7 +366,7 @@ public class DBReader {
 	
 	public DemoGeo selectDemoGeo(int zip) {
 		try {
-			DemoGeo d = null;
+			DemoGeo d = new DemoGeo();
 			ResultSet rs = null;
 			String st =  "SELECT * FROM DemoGeo D WHERE D.zip = ?;";
 			
