@@ -3,6 +3,7 @@ package database;
 import java.util.*;
 import java.util.Date;
 
+import classes_for_db.DemoGeo;
 import classes_for_db.Neighborhood;
 import classes_for_db.Property;
 import classes_for_db.PropertyDetails;
@@ -349,6 +350,95 @@ public class DBReader {
 		}
 		catch (SQLException e) {
 			System.out.println("ERROR: Could not select Tax Assessments for zpid: " + zpid);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public DemoGeo selectDemoGeo(int zip) {
+		try {
+			DemoGeo d = null;
+			ResultSet rs = null;
+			String st =  "SELECT * FROM DemoGeo D WHERE D.zip = ?;";
+			
+			 PreparedStatement ps = this.connect.prepareStatement(st, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			 ps.setInt(1, zip);
+			 ps.execute();
+			 rs = ps.executeQuery();
+
+
+			 if(rs.next() == false) {
+				 System.out.println("No demographic info found for zip: " + zip);
+				 return d;
+			 }
+			 else {
+				 rs.beforeFirst();
+				 while(rs.next()) {
+					 d.setZipCode(rs.getInt(1));
+					 d.setPop(rs.getInt(2));
+					 d.setPctFemale(rs.getDouble(3));
+					 d.setMedianAge(rs.getDouble(4));
+					 d.setPopOver(18, rs.getInt(5));
+					 d.setPctFemaleOver(18, rs.getDouble(6));
+					 d.setPopOver(65, rs.getInt(7));
+					 d.setPctFemaleOver(65, rs.getDouble(8));
+					 d.setRacePop("white", rs.getInt(9));
+					 d.setPctRacePop("white", rs.getDouble(10));
+					 d.setRacePop("black", rs.getInt(11));
+					 d.setPctRacePop("black", rs.getDouble(12));
+					 d.setRacePop("native", rs.getInt(13));
+					 d.setPctRacePop("native", rs.getDouble(14));
+					 d.setRacePop("asian", rs.getInt(15));
+					 d.setPctRacePop("asian", rs.getDouble(16));
+					 d.setRacePop("islander", rs.getInt(17));
+					 d.setPctRacePop("islander", rs.getDouble(18));
+					 d.setRacePop("other", rs.getInt(19));
+					 d.setPctRacePop("other", rs.getDouble(20));
+					 d.setHispanicPop(rs.getInt(21));
+					 d.setHispanicPctPop(rs.getDouble(22));
+					 d.setPop1824(rs.getInt(23));
+					 d.setPopOver(25, rs.getInt(24));
+					 d.setPctEdu("less than hs", rs.getDouble(25));
+					 d.setPctEdu("some hs", rs.getDouble(26));
+					 d.setPctEdu("hs grads", rs.getDouble(27));
+					 d.setPctEdu("some college", rs.getDouble(28));
+					 d.setPctEdu("associate's degree", rs.getDouble(29));
+					 d.setPctEdu("bachelor's degree", rs.getDouble(30));
+					 d.setPctEdu("graduate degree", rs.getDouble(31));
+					 d.setPctEduOrMore("hs", rs.getDouble(32));
+					 d.setPctEduOrMore("bachelor's", rs.getDouble(33));
+					 d.setMedianEarnings(rs.getInt(34));
+					 d.setMedianEarningsEdu("bachelor's", rs.getInt(35));
+					 d.setMedianEarningsEdu("graduate", rs.getInt(36));
+					 d.setNumHouseholds(rs.getInt(37));
+					 d.setFamHouseholds(rs.getInt(38));
+					 d.setPctFamilyHouseholds(rs.getDouble(39));
+					 d.setAvgFamSize(rs.getDouble(40));
+					 d.setNumFamU18Child(rs.getInt(41));
+					 d.setPctUnmarriedSex("gay", rs.getDouble(42));
+					 d.setPctUnmarriedSex("straight", rs.getDouble(43));
+					 d.setPctOneUnitStruct(rs.getDouble(44));
+					 d.setPctTwoPlusUnitStruct(rs.getDouble(45));
+				     d.setPctOcc("owner", rs.getDouble(46));
+				     d.setPctOcc("renter", rs.getDouble(47));
+				     d.setZipType(rs.getString(48));
+				     d.setCity(rs.getString(49));
+				     d.setState(rs.getString(50));
+				     d.setCounty(rs.getString(51));
+				     d.setTimeZone(rs.getString(52));
+				     d.setAreaCode1(rs.getInt(53));
+				     d.setAreaCode2(rs.getInt(54));
+					 d.setLatitude(rs.getFloat(55));
+					 d.setLongitude(rs.getFloat(56));
+					 d.setCountry(rs.getString(57));
+				 }
+				 return d;
+			 }
+
+		}
+		catch (SQLException e) {
+			System.out.println("ERROR: Could not select DemoGeo for: " + zip);
 			e.printStackTrace();
 			return null;
 		}
