@@ -1,21 +1,5 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> master
->>>>>>> brandon
-main/java/hello/GreetingController.class
-main/java/database/DBReader.class
-main/java/hello/DemographicsController.class
-main/java/hello/Application.class
-main/java/hello/Greeting.class
-<<<<<<< HEAD
->>>>>>> brandon
-=======
-<<<<<<< HEAD
-=======
->>>>>>> brandon
->>>>>>> master
->>>>>>> brandon
+main\java\hello\DemographicsController.class
+main\java\hello\Greeting.class
+main\java\database\DBReader.class
+main\java\hello\GreetingController.class
+main\java\hello\Application.class
