@@ -34,14 +34,6 @@ import main.java.classes_for_db.TaxAssessment;
 import main.java.classes_for_db.Zestimate;
 import main.java.classes_for_db.ZillowComparable;
 import main.java.database.DBReader;
-<<<<<<< HEAD
->>>>>>> brandon
-=======
-<<<<<<< HEAD
-=======
->>>>>>> brandon
->>>>>>> master
->>>>>>> brandon
 
 /**
  * @author brandonbogan
