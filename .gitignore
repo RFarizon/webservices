@@ -56,3 +56,4 @@ Temporary Items
 *.class
 
 .classpath
+/target/
