@@ -9,6 +9,18 @@ import java.util.List;
 import java.math.BigInteger;
 import org.junit.Test;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import classes_for_db.DemoGeo;
+import classes_for_db.Neighborhood;
+import classes_for_db.Property;
+import classes_for_db.TaxAssessment;
+import classes_for_db.Zestimate;
+import classes_for_db.ZillowComparable;
+import database.DBReader;
+=======
+>>>>>>> master
 import main.java.classes_for_db.DemoGeo;
 import main.java.classes_for_db.Neighborhood;
 import main.java.classes_for_db.Property;
@@ -16,6 +28,10 @@ import main.java.classes_for_db.TaxAssessment;
 import main.java.classes_for_db.Zestimate;
 import main.java.classes_for_db.ZillowComparable;
 import main.java.database.DBReader;
+<<<<<<< HEAD
+=======
+>>>>>>> brandon
+>>>>>>> master
 
 /**
  * @author brandonbogan

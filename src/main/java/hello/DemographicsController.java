@@ -6,8 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 import main.java.classes_for_db.DemoGeo;
 import main.java.database.DBReader;
+=======
+<<<<<<< HEAD
+import classes_for_db.DemoGeo;
+import database.DBReader;
+=======
+import main.java.classes_for_db.DemoGeo;
+import main.java.database.DBReader;
+>>>>>>> brandon
+>>>>>>> master
 
 @RestController
 public class DemographicsController {
