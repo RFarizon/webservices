@@ -9,6 +9,7 @@ import java.util.List;
 import java.math.BigInteger;
 import org.junit.Test;
 
+<<<<<<< HEAD
 import classes_for_db.DemoGeo;
 import classes_for_db.Neighborhood;
 import classes_for_db.Property;
@@ -16,6 +17,15 @@ import classes_for_db.TaxAssessment;
 import classes_for_db.Zestimate;
 import classes_for_db.ZillowComparable;
 import database.DBReader;
+=======
+import main.java.classes_for_db.DemoGeo;
+import main.java.classes_for_db.Neighborhood;
+import main.java.classes_for_db.Property;
+import main.java.classes_for_db.TaxAssessment;
+import main.java.classes_for_db.Zestimate;
+import main.java.classes_for_db.ZillowComparable;
+import main.java.database.DBReader;
+>>>>>>> brandon
 
 /**
  * @author brandonbogan
@@ -24,7 +34,7 @@ import database.DBReader;
 public class DBReaderTest {
 
   /**
-   * Test method for {@link database.DBReader#getConnection()}.
+   * Test method for {@link main.java.database.DBReader#getConnection()}.
    */
   @Test
   public void testGetConnection() {
@@ -40,7 +50,7 @@ public class DBReaderTest {
   }
 
   /**
-   * Test method for {@link database.DBReader#selectProperty(java.lang.String, int)}.
+   * Test method for {@link main.java.database.DBReader#selectProperty(java.lang.String, int)}.
    */
   @Test
   public void testSelectProperty() {
@@ -71,7 +81,7 @@ public class DBReaderTest {
   }
 
   /**
-   * Test method for {@link database.DBReader#selectZestimate(java.math.BigInteger)}.
+   * Test method for {@link main.java.database.DBReader#selectZestimate(java.math.BigInteger)}.
    */
   @Test
   public void testSelectZestimate() {
