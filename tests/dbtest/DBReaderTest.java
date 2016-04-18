@@ -10,6 +10,11 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> brandon
 import classes_for_db.DemoGeo;
 import classes_for_db.Neighborhood;
 import classes_for_db.Property;
@@ -18,6 +23,10 @@ import classes_for_db.Zestimate;
 import classes_for_db.ZillowComparable;
 import database.DBReader;
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> master
+>>>>>>> brandon
 import main.java.classes_for_db.DemoGeo;
 import main.java.classes_for_db.Neighborhood;
 import main.java.classes_for_db.Property;
@@ -25,6 +34,13 @@ import main.java.classes_for_db.TaxAssessment;
 import main.java.classes_for_db.Zestimate;
 import main.java.classes_for_db.ZillowComparable;
 import main.java.database.DBReader;
+<<<<<<< HEAD
+>>>>>>> brandon
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> brandon
+>>>>>>> master
 >>>>>>> brandon
 
 /**
