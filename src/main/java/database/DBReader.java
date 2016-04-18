@@ -131,7 +131,7 @@ public class DBReader {
 						p.setYearBuilt(0);
 					}
 					else {
-						p.setYearBuilt(rs.getString(11).substring(0, 4));
+						p.setYearBuilt(rs.getString(17).substring(0, 4));
 					}
 					
 					Zestimate z = selectZestimate(p.getZpid());
@@ -306,7 +306,12 @@ public class DBReader {
 					pd.setStatus(rs.getString(2));
 					pd.setPosting_type(rs.getString(3));
 					pd.setLastUpdated(rs.getDate(4));
+					if(rs.getString(5).length() < 1) {
+						pd.setyearUpdated(0);
+					}
+					else {
 					pd.setyearUpdated(rs.getString(5).substring(0,4));
+					}
 					pd.setNumFloors(rs.getInt(6));
 					pd.setBasement(rs.getString(7));
 					pd.setRoofType(rs.getString(8));
