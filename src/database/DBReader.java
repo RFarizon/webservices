@@ -190,6 +190,10 @@ public class DBReader {
 					z.setvaluationLow(rs.getInt(7));
 					z.setPercentileValue(rs.getFloat(8));
 					z.setDateRetrieved(rs.getDate(9));
+					z.setRentZestimate(rs.getInt(10));
+					z.setRentThirtyDayChange(rs.getInt(11));
+					z.setMinRent(rs.getInt(12));
+					z.setMaxRent(rs.getInt(13));
 				}
 
 			}
