@@ -57,3 +57,7 @@ Temporary Items
 
 .classpath
 /target/
+
+.settings/org.eclipse.jdt.core.prefs
+
+*.prefs
