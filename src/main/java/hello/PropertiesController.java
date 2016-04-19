@@ -14,7 +14,8 @@ import main.java.database.DBReader;
 @RestController
 public class PropertiesController {
     @RequestMapping("/properties")
-    public List<Property> prop(@RequestParam String address, @RequestParam int zip) {
+    public List<Property> prop(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip) {
+    	//System.out.println("THESE ARE THE PARAMS: " + address + " AND " + zip);
     	DBReader reader = new DBReader();
         return reader.selectProperty(address, zip);
     }
