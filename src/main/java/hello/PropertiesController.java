@@ -13,19 +13,6 @@ import main.java.database.DBReader;
 
 @RestController
 public class PropertiesController {
-<<<<<<< HEAD
-  @RequestMapping("/properties")
-  public List<Property> prop(@RequestParam(value = "address") String address,
-      @RequestParam(value = "zip") int zip) {
-    // System.out.println("THESE ARE THE PARAMS: " + address + " AND " + zip);
-    DBReader reader = new DBReader();
-    List<Property> resultList = reader.selectProperty(address, zip);
-    System.out
-        .println("Query Complete. Number of Results Returned From DBReader: " + resultList.size());
-    return resultList;
-  }
-}
-=======
     @RequestMapping("/properties")
     public List<Property> prop(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip) {
     	//System.out.println("THESE ARE THE PARAMS: " + address + " AND " + zip);
@@ -33,4 +20,3 @@ public class PropertiesController {
         return reader.selectProperty(address, zip);
     }
 }
->>>>>>> master
