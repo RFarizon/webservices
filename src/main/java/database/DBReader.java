@@ -359,6 +359,8 @@ public class DBReader {
 					c.setPrimaryZPID(BigInteger.valueOf(rs.getInt(2)));
 					c.setCompZPID(BigInteger.valueOf(rs.getInt(3)));
 					c.setCompScore(rs.getFloat(4));
+					c.setCompAddress(rs.getString(5));
+					c.setCompZip((rs.getInt(6)));
 					
 					lc.add(c);
 				}
