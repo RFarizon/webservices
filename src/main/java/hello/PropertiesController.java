@@ -13,9 +13,18 @@ import main.java.database.DBReader;
 
 @RestController
 public class PropertiesController {
+<<<<<<< HEAD
   @RequestMapping("/properties")
   public List<Property> prop(@RequestParam String address, @RequestParam int zip) {
     DBReader reader = new DBReader();
     return reader.selectProperty(address, zip);
   }
 }
+=======
+    @RequestMapping("/properties")
+    public List<Property> prop(@RequestParam String address, @RequestParam int zip) {
+    	DBReader reader = new DBReader();
+        return reader.selectProperty(address, zip);
+    }
+}
+>>>>>>> master
