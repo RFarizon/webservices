@@ -20,7 +20,7 @@ import main.java.dbConnectors.MysqlWriter;
 public class ZestimatesController {
     @RequestMapping(value = "/zestimate/update/value")
     public Zestimate updateZestimateValue(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip,
-    						@RequestParam(value = "valueChange") int valueChange) {
+        @RequestParam(value = "valuation")int valuation) {
     	DBReader reader = new DBReader();
     	MysqlWriter writer = new MysqlWriter();
     	if(reader.selectProperty(address, zip).isEmpty()) {
@@ -29,20 +29,20 @@ public class ZestimatesController {
     	}
     	
     	Zestimate z = reader.selectProperty(address, zip).get(0).getZestimate();
-    	BigInteger zpid = reader.selectProperty(address, zip).get(0).getZpid();
-    	
+        int valueChange = valuation - z.getZestimate();
+
     	writer.updateZestimateValue(z, valueChange);
     	
     	
     	System.out.println();
     	System.out.println("New zestimate: ");
-    	Zestimate newZest = reader.selectZestimate(zpid);
+    	Zestimate newZest = reader.selectZestimate(z.getZpid());
     	return newZest;
     }
     
     @RequestMapping(value = "/zestimate/update/rent")
     public Zestimate updateRentZestimate(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip,
-    						@RequestParam(value = "rentChange") int rentChange) {
+        @RequestParam(value = "rent")int rent) {
     	DBReader reader = new DBReader();
     	MysqlWriter writer = new MysqlWriter();
     	if(reader.selectProperty(address, zip).isEmpty()) {
@@ -50,7 +50,9 @@ public class ZestimatesController {
     		return new Zestimate();
     	}
     	Zestimate z = reader.selectProperty(address, zip).get(0).getZestimate();
-    	BigInteger zpid = reader.selectProperty(address, zip).get(0).getZpid();
+    	BigInteger zpid = z.getZpid();
+    	
+    	int rentChange = rent - z.getRentZestimate();;
     	
     	writer.updateRentZestimate(z, rentChange);
     	
