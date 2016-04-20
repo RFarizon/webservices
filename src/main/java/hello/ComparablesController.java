@@ -20,7 +20,7 @@ public class ComparablesController {
     @RequestMapping(value = "/comparables/insert")
     public List<ZillowComparable> CreateComp(@RequestParam(value = "address1")String address1, @RequestParam(value = "zip1")int zip1,
     						@RequestParam (value = "address2") String address2, @RequestParam (value = "zip2")int zip2, 
-    						@RequestParam (value = "compScore", defaultValue = 10.0) float compScore) {
+    						@RequestParam (value = "compScore") float compScore) {
     	DBReader reader = new DBReader();
     	MysqlWriter writer = new MysqlWriter();
     	if(reader.selectProperty(address1, zip1).isEmpty()) {
@@ -52,7 +52,7 @@ public class ComparablesController {
     @RequestMapping(value = "/comparables/delete")
     public List<ZillowComparable> DeleteComp(@RequestParam(value = "address1")String address1, @RequestParam(value = "zip1")int zip1,
 			@RequestParam(value = "address2")String address2, @RequestParam(value = "zip2")int zip2, 
-			@RequestParam (value = "compScore", defaultValue = 10.0) float compScore) {
+			@RequestParam (value = "compScore") float compScore) {
     	DBReader reader = new DBReader();
     	MysqlWriter writer = new MysqlWriter();
     	if(reader.selectProperty(address1, zip1).isEmpty()) {

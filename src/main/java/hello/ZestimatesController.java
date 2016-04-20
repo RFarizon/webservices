@@ -20,7 +20,7 @@ import main.java.dbConnectors.MysqlWriter;
 public class ZestimatesController {
     @RequestMapping(value = "/zestimate/update/value")
     public Zestimate updateZestimateValue(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip,
-    						@RequestParam(value = "valueChange", defaultValue = 0) int valueChange) {
+    						@RequestParam(value = "valueChange") int valueChange) {
     	DBReader reader = new DBReader();
     	MysqlWriter writer = new MysqlWriter();
     	if(reader.selectProperty(address, zip).isEmpty()) {
@@ -42,7 +42,7 @@ public class ZestimatesController {
     
     @RequestMapping(value = "/zestimate/update/rent")
     public Zestimate updateRentZestimate(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip,
-    						@RequestParam(value = "rentChange", defaultValue = 0)int rentChange) {
+    						@RequestParam(value = "rentChange") int rentChange) {
     	DBReader reader = new DBReader();
     	MysqlWriter writer = new MysqlWriter();
     	if(reader.selectProperty(address, zip).isEmpty()) {
