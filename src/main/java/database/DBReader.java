@@ -10,6 +10,7 @@ import main.java.classes_for_db.PropertyDetails;
 import main.java.classes_for_db.TaxAssessment;
 import main.java.classes_for_db.Zestimate;
 import main.java.classes_for_db.ZillowComparable;
+import main.java.hello.TransactionSummary;
 
 import java.math.BigInteger;
 import java.sql.*;
@@ -468,6 +469,33 @@ public class DBReader {
 			return null;
 		}
 	}
+
+
+  public List<TransactionSummary> getTransactionData(String table, String action, int days) {
+    List<TransactionSummary> resultList = new ArrayList<TransactionSummary>();
+    
+    String select = "SELECT * FROM db_transactions WHERE name_of_table LIKE ? AND transaction_type LIKE ? ORDER BY statistic_date DESC LIMIT ?";
+    try {
+      PreparedStatement selectStmt = this.connect.prepareStatement(select);
+      selectStmt.setString(1, table);
+      selectStmt.setString(2, action);
+      selectStmt.setInt(3, days);
+      ResultSet rs = selectStmt.executeQuery();
+      while(rs.next()){
+        TransactionSummary summary = new TransactionSummary();
+        summary.setId(rs.getInt(1));
+        summary.setTable(rs.getString(2));
+        summary.setTransactionType(rs.getString(3));
+        summary.setStatisticDate(rs.getDate(4));
+        summary.setTransactionCount(rs.getInt(5));
+        resultList.add(summary);
+      }
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return resultList;
+  }
 }
 
 
