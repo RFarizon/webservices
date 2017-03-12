@@ -137,10 +137,20 @@ public class DBReaderTest {
 	  @Test
 	  public void testGetTransactionSummary(){
 	    DBReader reader = new DBReader();
-	    List<TransactionSummary> testResult = reader.getTransactionData("Addresses", "INSERT", 1);
-	    assertEquals(1, testResult.size());
-	    assertEquals("Addresses", testResult.get(0).getTable());
-	    assertEquals(288, testResult.get(0).getTransactionCount());
+	    List<TransactionSummary> testResultInsert = reader.getTransactionData("Addresses", "INSERT", 1);
+	    assertEquals(1, testResultInsert.size());
+	    assertEquals("Addresses", testResultInsert.get(0).getTable());
+	    assertTrue(testResultInsert.get(0).getTransactionCount() > 288);
+//	    
+//	    List<TransactionSummary> testResultChanges = reader.getTransactionData("Addresses", "CHANGES", 1);
+//	    assertEquals(1, testResultChanges.size());
+//	    assertEquals("Addresses", testResultChanges.get(0).getTable());
+//	    assertFalse(testResultChanges.get(0).getTransactionCount() < testResultInsert.get(0).getTransactionCount());
+//	    
+//	    List<TransactionSummary> testResultAdditions = reader.getTransactionData("Addresses", "ADDITIONS", 1);
+//        assertEquals(1, testResultAdditions.size());
+//        assertEquals("Addresses", testResultAdditions.get(0).getTable());
+//        assertFalse(testResultChanges.get(0).getTransactionCount() < testResultAdditions.get(0).getTransactionCount());
 	  }
 
 
