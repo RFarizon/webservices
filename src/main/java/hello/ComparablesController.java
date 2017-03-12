@@ -1,6 +1,7 @@
 package main.java.hello;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,7 +23,12 @@ public class ComparablesController {
     						@RequestParam (value = "address2") String address2, @RequestParam (value = "zip2")int zip2, 
     						@RequestParam (value = "compScore") float compScore) {
     	DBReader reader = new DBReader();
-    	MysqlWriter writer = new MysqlWriter();
+    	MysqlWriter writer;
+    	List<ZillowComparable> compList = new ArrayList<ZillowComparable>();
+
+        try {
+          writer = new MysqlWriter();
+
     	if(reader.selectProperty(address1, zip1).isEmpty()) {
     		System.out.println("Unable to create comp; property not found at " + address1 + ", zip: " + zip1);
     		return new ArrayList<ZillowComparable>();
@@ -45,7 +51,12 @@ public class ComparablesController {
     	
     	System.out.println();
     	System.out.println("New comp list: ");
-    	List<ZillowComparable> compList = reader.selectZillowComparables(zpid1);
+    	compList = reader.selectZillowComparables(zpid1);
+        } catch (SQLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        
     	return compList;
     }
     
@@ -54,7 +65,11 @@ public class ComparablesController {
 			@RequestParam(value = "address2")String address2, @RequestParam(value = "zip2")int zip2, 
 			@RequestParam (value = "compScore") float compScore) {
     	DBReader reader = new DBReader();
-    	MysqlWriter writer = new MysqlWriter();
+    	MysqlWriter writer;
+    	List<ZillowComparable> compList = new ArrayList<ZillowComparable>();
+      try {
+        writer = new MysqlWriter();
+
     	if(reader.selectProperty(address1, zip1).isEmpty()) {
     		System.out.println("Unable to delete comp; property not found at " + address1 + ", zip: " + zip1);
     		return new ArrayList<ZillowComparable>();
@@ -77,7 +92,11 @@ public class ComparablesController {
     	
     	System.out.println();
     	System.out.println("New comp list: ");
-    	List<ZillowComparable> compList = reader.selectZillowComparables(zpid1);
+    	compList = reader.selectZillowComparables(zpid1);
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     	return compList;
     }
 }

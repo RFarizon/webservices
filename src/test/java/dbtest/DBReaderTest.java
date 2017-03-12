@@ -16,6 +16,7 @@ import main.java.classes_for_db.TaxAssessment;
 import main.java.classes_for_db.Zestimate;
 import main.java.classes_for_db.ZillowComparable;
 import main.java.database.DBReader;
+import main.java.hello.TransactionSummary;
 
 public class DBReaderTest {
 
@@ -131,6 +132,15 @@ public class DBReaderTest {
 		  DBReader reader = new DBReader();
 		  DemoGeo dallas = reader.selectDemoGeo(75201);
 		  assertEquals(20, dallas.getRacePctPop("black"), 0.5);
+	  }
+	  
+	  @Test
+	  public void testGetTransactionSummary(){
+	    DBReader reader = new DBReader();
+	    List<TransactionSummary> testResult = reader.getTransactionData("Addresses", "INSERT", 1);
+	    assertEquals(1, testResult.size());
+	    assertEquals("Addresses", testResult.get(0).getTable());
+	    assertEquals(288, testResult.get(0).getTransactionCount());
 	  }
 
 
