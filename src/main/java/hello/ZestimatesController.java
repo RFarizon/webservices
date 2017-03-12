@@ -1,6 +1,7 @@
 package main.java.hello;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,11 +19,16 @@ import main.java.dbConnectors.MysqlWriter;
 
 @RestController
 public class ZestimatesController {
+  
     @RequestMapping(value = "/zestimate/update/value")
     public Zestimate updateZestimateValue(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip,
         @RequestParam(value = "valuation")int valuation) {
     	DBReader reader = new DBReader();
-    	MysqlWriter writer = new MysqlWriter();
+    	MysqlWriter writer;
+    	Zestimate newZest = new Zestimate();
+      try {
+        writer = new MysqlWriter();
+
     	if(reader.selectProperty(address, zip).isEmpty()) {
     		System.out.println("Unable to update zestimate; property not found at " + address + ", zip: " + zip);
     		return new Zestimate();
@@ -36,7 +42,11 @@ public class ZestimatesController {
     	
     	System.out.println();
     	System.out.println("New zestimate: ");
-    	Zestimate newZest = reader.selectZestimate(z.getZpid());
+    	newZest = reader.selectZestimate(z.getZpid());
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     	return newZest;
     }
     
@@ -44,7 +54,11 @@ public class ZestimatesController {
     public Zestimate updateRentZestimate(@RequestParam(value = "address")String address, @RequestParam(value = "zip")int zip,
         @RequestParam(value = "rent")int rent) {
     	DBReader reader = new DBReader();
-    	MysqlWriter writer = new MysqlWriter();
+    	MysqlWriter writer;
+        Zestimate newZest = new Zestimate();
+      try {
+        writer = new MysqlWriter();
+
     	if(reader.selectProperty(address, zip).isEmpty()) {
     		System.out.println("Unable to update rent zestimate; property not found at " + address + ", zip: " + zip);
     		return new Zestimate();
@@ -59,7 +73,11 @@ public class ZestimatesController {
     	
     	System.out.println();
     	System.out.println("New zestimate: ");
-    	Zestimate newZest = reader.selectZestimate(zpid);
+    	newZest = reader.selectZestimate(zpid);
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     	return newZest;
     }
 }
